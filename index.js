@@ -21,26 +21,29 @@ async function setup() {
 
   exec.exec('chmod', ['+x', path]);
   core.info(`Extracted witness to ${path}`);
-  await addShell();
+  createWitnessConfigYaml(core.getInput('signing-key'));
 
   // Expose the tool by adding it to the PATH
   core.addPath(path);
 }
 
 
+async function createWitnessConfigYaml(key) {
+  //write the key to a temp file
+  const keyFile = fs.createWriteStream('./key.pem');
+  keyFile.write(key);
+
+  //create the config file
+  const config = {
+    "run": {
+      "key": "key.pem",
+      "trace": "true",
+    }
+  }
+  fs.writeFileSync('./.witness.yaml', JSON.stringify(config));
+}
 
 
-async function addShell() {
-
-
-  const shellCommandb64 = "IyEvYmluL3NoCgpleHBvcnQgV0lUTkVTU19TVEVQX05BTUU9InRlc3QiCgpzaGVsbCgpIHsKICAgIFRPUENNRD0kQCBiYXNoIC1jICd3aGlsZSByZWFkIC1wICIke1RPUENNRCMjKi99PiAiIC1yYSBzdWI7IGRvCiAgICAgICAgY2FzZSAke3N1YlswXTotfSBpbgogICAgICAgICIiKSBjb250aW51ZTs7CiAgICAgICAgZXhpdCkgZXhpdDs7CiAgICAgICAgZXNjYXBlKSAoc2V0IC14OyAke3N1YltAXToxfSk7OwogICAgICAgICopIChzZXQgLXg7IHNjcmliZSAtLXN0ZXAtbmFtZT0ke1NURVBfTkFNRX0gLS0gJHtUT1BDTUR9ICR7c3ViW0BdfSk7OwogICAgICAgIGVzYWMKICAgICAgICBkb25lJwp9CgpzaGVsbCAiJEAi";
-  const shellCommand = Buffer.from(shellCommandb64, 'base64').toString('ascii');
-  fs.writeFileSync('./shell.sh', shellCommand);
-
-
-  await exec.exec('cat', ['./shell.sh']);
-  await exec.exec('chmod', ['+x', './shell.sh']);
-};
 
 
 setup();
