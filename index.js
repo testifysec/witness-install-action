@@ -15,6 +15,9 @@ async function setup() {
 
   // Expose the tool by adding it to the PATH
   core.addPath(pathToCLI);
+  core.warning(`Witness CLI is available at ${pathToCLI}`);
+
+
   core.setOutput('path', pathToCLI);
   core.console.log(`Witness CLI is available at ${pathToCLI}`);
 }
