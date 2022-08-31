@@ -1,0 +1,24 @@
+name: 'Witness install'
+description: 'Installs Witness and sets the shell to redirect all commands to witness'
+inputs:
+  version:
+    description: 'The version of Witness to install'
+    required: true
+    default: v0.1.11
+  spire-server:
+    description: 'Spire server address'
+    required: false
+  archivist-grpc-server:
+    description: 'Archivist server address'
+    required: true
+    default: "archivist-grpc.testifysec.io:443"
+  archivist-http-server:
+    description: 'Archivist server address'
+    required: true
+    default: "https://archivist.testifysec.io:443"
+  signing-key:
+    description: 'PEM Encoded Signing Key'
+    required: false
+runs:
+  using: 'node16'
+  main: 'index.js'
