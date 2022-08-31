@@ -7,6 +7,6 @@ jobs:
     steps:
       - name: Configure Witness
         id: hello
-        uses: testifysec/witness-install-action@v0.0.1
+        uses: testifysec/witness-install-action@v0.0.2
       - name: Test Witness
         uses: echo "Hello Witness"
