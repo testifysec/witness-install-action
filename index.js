@@ -15,7 +15,7 @@ async function setup() {
   //const pathToTarball = await tc.downloadTool(getDownloadURL());
 
   // Extract the tarball onto the runner
-  const pathToCLI = await tc.downloadTool(witnessURL);
+  const pathToCLI = await tc.downloadTool(witnessURL, "./witness");
   core.info(`Extracted witness to ${pathToCLI}`);
 
   // Expose the tool by adding it to the PATH
