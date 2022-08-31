@@ -6,7 +6,6 @@ async function setup() {
   // Get version of tool to be installed
   const version = core.getInput('version');
 
-)
 
   // Download the specific version of the tool, e.g. as a tarball
   const pathToTarball = await tc.downloadTool(getDownloadURL());
