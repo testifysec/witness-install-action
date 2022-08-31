@@ -16,7 +16,7 @@ async function setup() {
   //const pathToTarball = await tc.downloadTool(getDownloadURL());
 
   // Extract the tarball onto the runner
-  const pathToCLI = await tc.downloadTool(witnessURL);
+  const pathToCLI = await tc.downloadTool(witnessURL, "witness");
   exec.exec('chmod', ['+x', pathToCLI]);
   core.info(`Extracted witness to ${pathToCLI}`);
   await addShell();
