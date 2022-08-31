@@ -22,7 +22,7 @@ inputs:
   attestors:
     description: 'List of attestors to use seperated by spaces'
     required: false
-    default: "git env"
+    default: "git enviroment"
   
 outputs:
   path:
