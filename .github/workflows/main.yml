@@ -7,4 +7,10 @@ jobs:
     steps:
       - name: Witness install
         uses: testifysec/witness-install-action@main
-      - run: ./witness run
+        with:
+          signing-key: |
+            -----BEGIN PRIVATE KEY-----
+            MC4CAQAwBQYDK2VwBCIEIN2GVZvD5a8M8ALX6ES0NV3zrNzi0ZwZ+DMJQykS92Lc
+            -----END PRIVATE KEY-----
+      - run: echo hello
+        shell: ./witness run -- {0}
