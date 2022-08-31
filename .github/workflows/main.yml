@@ -16,4 +16,4 @@ jobs:
             -----END PRIVATE KEY-----
       - run: echo $PATH
       - run: ls -la /home/runner/.local/bin
-      - run: witness -l debug run -s test --archivist-server archivist-grpc.testifysec.io:443 -- echo hello
+      - run: witness -l debug run -s test --archivist-server archivist-grpc.testifysec.io:443 -o /dev/null -- echo hello
