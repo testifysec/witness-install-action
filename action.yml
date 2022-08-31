@@ -19,6 +19,10 @@ inputs:
   signing-key:
     description: 'PEM Encoded Signing Key'
     required: false
+outputs:
+  path:
+    description: 'The path to the Witness binary'
+  
 runs:
   using: 'node16'
   main: 'index.js'
