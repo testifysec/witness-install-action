@@ -7,5 +7,4 @@ jobs:
     steps:
       - name: Witness install
         uses: testifysec/witness-install-action@main
-      - name: Test Witness
-        run: witness
+        run: witness run
