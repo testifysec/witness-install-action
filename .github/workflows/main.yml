@@ -1,0 +1,12 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: test witness install
+    steps:
+      - name: Configure Witness
+        id: hello
+        uses: testifysec/witness-install-action@v0.0.1
+      - name: Test Witness
+        uses: echo "Hello Witness"
