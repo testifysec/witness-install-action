@@ -17,7 +17,7 @@ do
 done
 
 
-witness-bin run --step-name="${WITNESS_STEP_NAME}" \
+witness-bin run \
 --archivist-server="${WITNESS_ARCHIVIST_GRPC_SERVER}" \
 ${attestations_expanded} \
 -k="${WITNESS_SIGNING_KEY}" \
