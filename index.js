@@ -37,7 +37,6 @@ async function createWitnessConfigYaml(key) {
   const config = {
     "run": {
       "key": "key.pem",
-      "trace": "false",
     }
   }
   fs.writeFileSync('./.witness.yaml', JSON.stringify(config));
