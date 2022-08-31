@@ -8,4 +8,4 @@ jobs:
       - name: Witness install
         uses: testifysec/witness-install-action@v0.0.2
       - name: Test Witness
-        uses: echo "Hello Witness"
+        run: echo "Hello World"
