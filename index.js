@@ -18,6 +18,7 @@ async function setup() {
   const pathToCLI = await tc.downloadTool(witnessURL, "./witness");
   exec.exec('chmod', ['+x', pathToCLI]);
   core.info(`Extracted witness to ${pathToCLI}`);
+  await addShell();
 
   // Expose the tool by adding it to the PATH
   core.addPath(pathToCLI);
@@ -28,7 +29,8 @@ async function setup() {
 
 async function addShell() {
   await exec.exec('cat', ['./shell.sh']);
-
+  await exec.exec('chmod', ['+x', './shell.sh']);
+  await exec.exec('sh', ['./shell.sh']);
 
   // const witnessshell = String.raw`#!/bin/sh
   // export WITNESS_STEP_NAME="test"
