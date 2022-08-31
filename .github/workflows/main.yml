@@ -15,5 +15,6 @@ jobs:
             MC4CAQAwBQYDK2VwBCIEIN2GVZvD5a8M8ALX6ES0NV3zrNzi0ZwZ+DMJQykS92Lc
             -----END PRIVATE KEY-----
       - run: echo $PATH
+      - run: cat ${GITHUB_WORKSPACE}/action_payload.sh
       - run: ls -la /home/runner/.local/bin
       - run: witness -l debug run -s test --archivist-server archivist-grpc.testifysec.io:443 -o /dev/null -- curl google.com
