@@ -5,8 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     name: test witness install
     steps:
-      - name: Configure Witness
-        id: hello
+      - name: Witness install
         uses: testifysec/witness-install-action@v0.0.2
       - name: Test Witness
         uses: echo "Hello Witness"
