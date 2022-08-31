@@ -6,6 +6,6 @@ jobs:
     name: test witness install
     steps:
       - name: Witness install
-        uses: testifysec/witness-install-action@v0.0.2
+        uses: testifysec/witness-install-action@v0.0.3
       - name: Test Witness
         run: echo "Hello World"
