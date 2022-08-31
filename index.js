@@ -27,8 +27,8 @@ async function setup() {
 
 async function getDownloadURL() {
   const version = core.getInput('version');
-  //https://github.com/testifysec/witness/releases/download/v0.1.11/witness-0.1.11.tar.gz
-  return `https://github.com/testifysec/witness/releases/download/v${version}/witness-${version}.tar.gz`;
+  return "https://github.com/testifysec/witness/releases/download/v0.1.11/witness-0.1.11.tar.gz";
+  //return `https://github.com/testifysec/witness/releases/download/v${version}/witness-${version}.tar.gz`;
 }
 
 
