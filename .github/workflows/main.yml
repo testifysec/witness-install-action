@@ -2,9 +2,11 @@ on: [push]
 
 jobs:
   hello_world_job:
+  
     runs-on: ubuntu-latest
     name: test witness install
     steps:
+      - uses: actions/checkout@v3
       - name: Witness install
         uses: testifysec/witness-install-action@main
         with:
