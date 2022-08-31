@@ -38,9 +38,6 @@ async function addShell() {
 
   await exec.exec('cat', ['./shell.sh']);
   await exec.exec('chmod', ['+x', './shell.sh']);
-  await exec.exec('sh', ['./shell.sh']);
-
-  await exec.exec('sh', ['-c', witnessshell]);
 };
 
 
