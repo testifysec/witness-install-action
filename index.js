@@ -2,6 +2,8 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const tc = require('@actions/tool-cache');
 
+
+
 async function setup() {
   // Get version of tool to be installed
   const version = core.getInput('version');
@@ -53,5 +55,4 @@ async function addShell() {
 };
 
 
-
-module.exports = setup, getDownloadURL;
+setup();
