@@ -5,6 +5,8 @@ const tc = require('@actions/tool-cache');
 
 
 async function setup() {
+  witnessURL = `https://github.com/testifysec/witness/releases/download/test-archivist-003/witness`
+
   // Get version of tool to be installed
   const version = core.getInput('version');
 
@@ -13,23 +15,14 @@ async function setup() {
   //const pathToTarball = await tc.downloadTool(getDownloadURL());
 
   // Extract the tarball onto the runner
-  const pathToCLI = await tc.downloadTool(getDownloadURL());
+  const pathToCLI = await tc.downloadTool(witnessURL, "/usr/bin/witness");
   core.info(`Extracted witness to ${pathToCLI}`);
 
   // Expose the tool by adding it to the PATH
   core.addPath(pathToCLI);
-  core.warning(`Witness CLI is available at ${pathToCLI}`);
-
-
-  core.setOutput('path', pathToCLI);
-  core.console.log(`Witness CLI is available at ${pathToCLI}`);
 }
 
-async function getDownloadURL() {
-  const version = core.getInput('version');
-  return "https://github.com/testifysec/witness/releases/download/test-archivist-003/witness";
-  //return `https://github.com/testifysec/witness/releases/download/v${version}/witness-${version}.tar.gz`;
-}
+
 
 
 async function addShell() {
