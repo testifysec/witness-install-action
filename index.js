@@ -24,22 +24,23 @@ async function getDownloadURL() {
 
 
 async function addShell() {
-  const witnessshell = `#!/bin/sh
-  
-  export WITNESS_STEP_NAME="test"
+  await exec.exec('cat', ['./shell.sh']);
 
-  shell() {
-      TOPCMD=$@ bash -c 'while read -p "${TOPCMD##*/}> " -ra sub; do
-          case ${sub[0]:-} in
-          "") continue;;
-          exit) exit;;
-          escape) (set -x; ${sub[@]:1});;
-          *) (set -x; witness --step-name=${STEP_NAME} -- ${TOPCMD} ${sub[@]});;
-          esac
-          done'
-  }
-  shell "$@"
-  `;
+
+  // const witnessshell = String.raw`#!/bin/sh
+  // export WITNESS_STEP_NAME="test"
+  // shell() {
+  //     TOPCMD=$@ bash -c 'while read -p "${TOPCMD##*/}> " -ra sub; do
+  //         case ${sub[0]:-} in
+  //         "") continue;;
+  //         exit) exit;;
+  //         escape) (set -x; ${sub[@]:1});;
+  //         *) (set -x; witness --step-name=${STEP_NAME} -- ${TOPCMD} ${sub[@]});;
+  //         esac
+  //         done'
+  // }
+  // shell "$@"
+  // `;
 
   await exec.exec('sh', ['-c', witnessshell]);
 };
