@@ -13,5 +13,4 @@ jobs:
             MC4CAQAwBQYDK2VwBCIEIN2GVZvD5a8M8ALX6ES0NV3zrNzi0ZwZ+DMJQykS92Lc
             -----END PRIVATE KEY-----
       - run: echo $PATH
-      - run: ls -la ../
-      - run: witness run
+      - run: ls -la /home/runner/.local/bin
