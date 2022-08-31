@@ -1,16 +1,27 @@
-#!/bin/sh
+#! /bin/bash
 
-export WITNESS_STEP_NAME="test"
+set -x
 
-shell() {
-    TOPCMD=$@ bash -c 'while read -p "${TOPCMD##*/}> " -ra sub; do
-        case ${sub[0]:-} in
-        "") continue;;
-        exit) exit;;
-        escape) (set -x; ${sub[@]:1});;
-        *) (set -x; scribe --step-name=${STEP_NAME} -- ${TOPCMD} ${sub[@]});;
-        esac
-        done'
-}
 
-shell "$@"
+attestations=$WITNESS_ATTESTORS
+attestations_expanded=""
+
+##split the attestations into an array at space
+IFS=' ' read -r -a attestations_array <<< "$attestations"
+
+
+##epand the attestations array into a string with a prefix of -a
+for i in "${attestations_array[@]}"
+do
+    attestations_expanded+=" -a $i"
+done
+
+
+witness-bin run --step-name="${WITNESS_STEP_NAME}" \
+--archivist-server="${WITNESS_ARCHIVIST_GRPC_SERVER}" \
+${attestations_expanded} \
+-k="${WITNESS_SIGNING_KEY}" \
+-o="/dev/null" \
+--trace="${WITNESS_TRACE_ENABLE}" \
+-s="${WITNESS_STEP_NAME}" \
+-- "$@"
