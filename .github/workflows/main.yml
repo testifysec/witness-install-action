@@ -16,5 +16,4 @@ jobs:
             -----END PRIVATE KEY-----
       - run: echo $PATH
       - run: ls -la /home/runner/.local/bin
-      - run: echo hello
-        shell: witness -l debug run -s test -- {0}
+      - run: witness -l debug run -s test -- echo hello
