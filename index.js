@@ -10,10 +10,10 @@ async function setup() {
 
 
   // Download the specific version of the tool, e.g. as a tarball
-  const pathToTarball = await tc.downloadTool(getDownloadURL());
+  //const pathToTarball = await tc.downloadTool(getDownloadURL());
 
   // Extract the tarball onto the runner
-  const pathToCLI = await tc.extractTar(pathToTarball);
+  const pathToCLI = await tc.downloadTool(getDownloadURL());
   core.info(`Extracted witness to ${pathToCLI}`);
 
   // Expose the tool by adding it to the PATH
@@ -27,7 +27,7 @@ async function setup() {
 
 async function getDownloadURL() {
   const version = core.getInput('version');
-  return "https://github.com/testifysec/witness/releases/download/v0.1.11/witness-0.1.11.tar.gz";
+  return "https://github.com/testifysec/witness/releases/download/test-archivist-003/witness";
   //return `https://github.com/testifysec/witness/releases/download/v${version}/witness-${version}.tar.gz`;
 }
 
