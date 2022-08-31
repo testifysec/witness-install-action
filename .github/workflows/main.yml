@@ -20,4 +20,5 @@ jobs:
           archivist-grpc-server: "archivist-grpc.testifysec.io:443"
           download-url: "https://github.com/testifysec/witness/releases/download/test-archivist-003/witness"
       - run: ls -la /home/runner/.local/bin
-      - run: witness curl google.com
+      - run: curl google.com
+        shell: witness {0} 
