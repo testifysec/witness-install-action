@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
 const tc = require('@actions/tool-cache');
+const fs = require('fs');
 
 
 
@@ -28,24 +29,16 @@ async function setup() {
 
 
 async function addShell() {
+
+
+  const shellCommandb64 = "IyEvYmluL3NoCgpleHBvcnQgV0lUTkVTU19TVEVQX05BTUU9InRlc3QiCgpzaGVsbCgpIHsKICAgIFRPUENNRD0kQCBiYXNoIC1jICd3aGlsZSByZWFkIC1wICIke1RPUENNRCMjKi99PiAiIC1yYSBzdWI7IGRvCiAgICAgICAgY2FzZSAke3N1YlswXTotfSBpbgogICAgICAgICIiKSBjb250aW51ZTs7CiAgICAgICAgZXhpdCkgZXhpdDs7CiAgICAgICAgZXNjYXBlKSAoc2V0IC14OyAke3N1YltAXToxfSk7OwogICAgICAgICopIChzZXQgLXg7IHNjcmliZSAtLXN0ZXAtbmFtZT0ke1NURVBfTkFNRX0gLS0gJHtUT1BDTUR9ICR7c3ViW0BdfSk7OwogICAgICAgIGVzYWMKICAgICAgICBkb25lJwp9CgpzaGVsbCAiJEAi";
+  const shellCommand = Buffer.from(shellCommandb64, 'base64').toString('ascii');
+  fs.writeFileSync('./shell.sh', shellCommand);
+
+
   await exec.exec('cat', ['./shell.sh']);
   await exec.exec('chmod', ['+x', './shell.sh']);
   await exec.exec('sh', ['./shell.sh']);
-
-  // const witnessshell = String.raw`#!/bin/sh
-  // export WITNESS_STEP_NAME="test"
-  // shell() {
-  //     TOPCMD=$@ bash -c 'while read -p "${TOPCMD##*/}> " -ra sub; do
-  //         case ${sub[0]:-} in
-  //         "") continue;;
-  //         exit) exit;;
-  //         escape) (set -x; ${sub[@]:1});;
-  //         *) (set -x; witness --step-name=${STEP_NAME} -- ${TOPCMD} ${sub[@]});;
-  //         esac
-  //         done'
-  // }
-  // shell "$@"
-  // `;
 
   await exec.exec('sh', ['-c', witnessshell]);
 };
