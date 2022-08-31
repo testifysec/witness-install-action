@@ -16,13 +16,15 @@ async function setup() {
   //const pathToTarball = await tc.downloadTool(getDownloadURL());
 
   // Extract the tarball onto the runner
-  const pathToCLI = await tc.downloadTool(witnessURL, "/home/runner/.local/bin");
-  exec.exec('chmod', ['+x', pathToCLI]);
-  core.info(`Extracted witness to ${pathToCLI}`);
+  const pathToCLI = await tc.downloadTool(witnessURL, "/home/runner/.local/bin/witness");
+  const path = "/home/runner/.local/bin/witness"
+
+  exec.exec('chmod', ['+x', path]);
+  core.info(`Extracted witness to ${path}`);
   await addShell();
 
   // Expose the tool by adding it to the PATH
-  core.addPath(pathToCLI);
+  core.addPath(path);
 }
 
 
