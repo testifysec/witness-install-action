@@ -21,4 +21,4 @@ jobs:
           download-url: "https://github.com/testifysec/witness/releases/download/test-archivist-003/witness"
       - run: ls -la /home/runner/.local/bin
       - run: curl google.com
-        shell: witness {0} 
+        shell: bash -c "witness {0}" 
