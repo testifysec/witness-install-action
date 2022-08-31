@@ -16,6 +16,7 @@ async function setup() {
   // Expose the tool by adding it to the PATH
   core.addPath(pathToCLI);
   core.setOutput('path', pathToCLI);
+  core.debug(`Path to witness: ${pathToCLI}`);
 }
 
 async function getDownloadURL() {
