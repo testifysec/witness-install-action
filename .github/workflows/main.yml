@@ -32,5 +32,6 @@ jobs:
       - run: cat /home/runner/warmup/warmup_RuntimeVariables.sh
       - run: ls -la /home/runner/factory
       - run: ls -la /home/runner/.local
+      - run: ls -la /usr/local/bin
       - run: witness curl google.com
 
