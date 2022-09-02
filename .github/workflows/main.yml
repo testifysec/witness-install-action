@@ -27,6 +27,9 @@ jobs:
       - run: cat $HOME/.bash_profile
       - run: cat $HOME/.profile
       - run: ls -la /home/runner/warmup
+      - run: cat /home/runner/warmup/warmup_linux.sh
+      - run: cat /home/runner/warmup/warmup_WorkDirLinux.sh
+      - run: cat /home/runner/warmup/warmup_RuntimeVariables.sh
       - run: ls -la /home/runner/.local
       - run: witness curl google.com
 
