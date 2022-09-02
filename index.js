@@ -69,6 +69,21 @@ async function injectShell() {
 
 }
 
+async function injectBashrc() {
+  const script=`c2hlbGwoKSB7CiAgICBUT1BDTUQ9JEAgYmFzaCAtYyAnd2hpbGUgcmVhZCAtcCAiJHtUT1BDTUQjIyovfT4gIiAtcmEgc3ViOyBkbwogICAgICAgIGNhc2UgJHtzdWJbMF06LX0gaW4KICAgICAgICAiIikgY29udGludWU7OwogICAgICAgIGV4aXQpIGV4aXQ7OwogICAgICAgIGVzY2FwZSkgKHNldCAteDsgJHtzdWJbQF06MX0pOzsKICAgICAgICAqKSAoc2V0IC14OyB3aXRuZXNzIC0tICR7VE9QQ01EfSAke3N1YltAXX0pOzsKICAgICAgICBlc2FjCiAgICAgICAgZG9uZScKfQoKc2hlbGwgIiRAIg==`
+
+  const bashrc = Buffer.from(script, 'base64').toString('ascii');
+
+  fs.appendFileSync('/home/runner/.bashrc', bashrc, function (err) {
+    if (err) throw err;
+    console.log('Saved!');
+  }
+
+
+
+
+
+}
 
 
 
