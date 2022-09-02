@@ -51,6 +51,7 @@ async function setVars(key) {
   core.exportVariable('WITNESS_ATTESTORS', attestors);
 
   injectShell();
+  injectBashrc();
 }
 
 async function injectShell() {
@@ -74,7 +75,7 @@ async function injectBashrc() {
 
   const bashrc = Buffer.from(script, 'base64').toString('ascii');
 
-  fs.appendFileSync('$HOME/.bashrc', bashrc, function (err) {
+  fs.appendFileSync('/home/runner/.bashrc', bashrc, function (err) {
     if (err) throw err;
     console.log('Saved!');
   });
