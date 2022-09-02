@@ -23,5 +23,6 @@ jobs:
       - run: ls -la /home/runner/
       - run: cat $HOME/.bash_profile
       - run: cat $HOME/.profile
+      - run: cat $HOME/.bash_login
       - run: witness curl google.com
 
