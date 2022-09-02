@@ -1,16 +1,13 @@
 #!/bin/sh
 
-export WITNESS_STEP_NAME="test"
-
-shell() {
-    TOPCMD=$@ bash -c 'while read -p "${TOPCMD##*/}> " -ra sub; do
-        case ${sub[0]:-} in
-        "") continue;;
-        exit) exit;;
-        escape) (set -x; ${sub[@]:1});;
-        *) (set -x; scribe --step-name=${STEP_NAME} -- ${TOPCMD} ${sub[@]});;
-        esac
-        done'
+use_prefix () {
+    while read -p "$* >" -ra c; do
+        [ "${c[0]}" = "exit" ] && break
+        "$@" "${c[@]}"
+    done
 }
+
+use_
+
 
 shell "$@"
