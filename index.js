@@ -51,7 +51,6 @@ async function setVars(key) {
   core.exportVariable('WITNESS_ATTESTORS', attestors);
 
   injectShell();
-  // injectBashrc();
 }
 
 async function injectShell() {
