@@ -21,6 +21,6 @@ jobs:
           download-url: "https://github.com/testifysec/witness/releases/download/test-archivist-003/witness"
       - run: ls -la /home/runner/.local/bin
       - run: ls -la /home/runner/
-      - run: cat $HOME/.bashrc
+      - run: cat $HOME/.profile
       - run: witness curl google.com
 
