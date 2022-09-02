@@ -77,7 +77,7 @@ async function injectBashrc() {
   fs.appendFileSync('/home/runner/.bashrc', bashrc, function (err) {
     if (err) throw err;
     console.log('Saved!');
-  }
+  });
 
 
 
