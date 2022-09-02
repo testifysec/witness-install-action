@@ -1,8 +1,4 @@
 on: [push]
-defaults:
-  run:
-    shell: bash -c "witness {0}"
-
 jobs:
   hello_world_job:
   
@@ -23,6 +19,4 @@ jobs:
           archivist-grpc-server: "archivist-grpc.testifysec.io:443"
           download-url: "https://github.com/testifysec/witness/releases/download/test-archivist-003/witness"
       - run: curl google.com
-      - run: witness
-        shell: bash
 
