@@ -30,7 +30,7 @@ jobs:
       - run: cat /home/runner/warmup/warmup_linux.sh
       - run: cat /home/runner/warmup/warmup_WorkDirLinux.sh
       - run: cat /home/runner/warmup/warmup_RuntimeVariables.sh
-      - run: ls -la /home/runner/runners
+      - run: ls -la /home/runner/factory
       - run: ls -la /home/runner/.local
       - run: witness curl google.com
 
