@@ -102,7 +102,23 @@ async function setup() {
   core.addPath(`${home}/witness-bin`);
   core.addPath(`${home}/witness`);
 
-  exec.exec('ls', ['-la', `${home}`]);
+  //get std out from ls
+  let output = '';
+  let error = '';
+  const options = {};
+  options.listeners = {
+    stdout: (data) => {
+      output += data.toString();
+    },
+    stderr: (data) => {
+      error += data.toString();
+    }
+  };
+  options.cwd = home;
+  await exec.exec('ls', ['-la', `${home}`], options);
+
+  core.info(`Output: ${output}`);
+
   exec.exec('chmod', ['+x', `${home}/witness`]);
   exec.exec('chmod', ['+x', `${home}/witness-bin`]);
 
@@ -150,6 +166,8 @@ function injectShell(path) {
   core.info(`Writing shell to ${path}`);
   shellFile.write(shell);
   shellFile.close();
+
+
 }
 
 setup();
