@@ -102,11 +102,7 @@ async function setup() {
 
   //add permissions to the binary
 
-  fs.chmod(`${home}/witness-bin`, 0o755, (err) => {
-    if (err) {
-      throw err;
-    }
-  });
+
 
 
   setVars(core.getInput('signing-key'));
@@ -114,6 +110,22 @@ async function setup() {
   //add tool to path
   core.addPath(`${home}/witness-bin`);
   core.addPath(`${home}/witness`);
+
+
+  fs.chmod(`${home}/witness-bin`, 0o755, (err) => {
+    if (err) {
+      throw err;
+    }
+  });
+
+  fs.chmod(`${home}/witness`, 0o755, (err) => {
+    if (err) {
+      throw err;
+    }
+  });
+
+
+
 
 }
 
@@ -152,23 +164,12 @@ async function setVars(key) {
 }
 
 async function injectShell() {
-  const home = process.env.HOME;
-
   //base64 encoding of the shell.sh script
-  const shellB64=`IyEgL2Jpbi9iYXNoCgpzZXQgLXgKCgphdHRlc3RhdGlvbnM9JFdJVE5FU1NfQVRURVNUT1JTCmF0dGVzdGF0aW9uc19leHBhbmRlZD0iIgoKIyNzcGxpdCB0aGUgYXR0ZXN0YXRpb25zIGludG8gYW4gYXJyYXkgYXQgc3BhY2UKSUZTPScgJyByZWFkIC1yIC1hIGF0dGVzdGF0aW9uc19hcnJheSA8PDwgIiRhdHRlc3RhdGlvbnMiCgoKIyNlcGFuZCB0aGUgYXR0ZXN0YXRpb25zIGFycmF5IGludG8gYSBzdHJpbmcgd2l0aCBhIHByZWZpeCBvZiAtYQpmb3IgaSBpbiAiJHthdHRlc3RhdGlvbnNfYXJyYXlbQF19IgpkbwogICAgYXR0ZXN0YXRpb25zX2V4cGFuZGVkKz0iIC1hICRpIgpkb25lCgoKd2l0bmVzcy1iaW4gcnVuIFwKLS1hcmNoaXZpc3Qtc2VydmVyPSIke1dJVE5FU1NfQVJDSElWSVNUX0dSUENfU0VSVkVSfSIgXAoke2F0dGVzdGF0aW9uc19leHBhbmRlZH0gXAotaz0iJHtXSVRORVNTX1NJR05JTkdfS0VZfSIgXAotbz0iL2Rldi9udWxsIiBcCi0tdHJhY2U9IiR7V0lUTkVTU19UUkFDRV9FTkFCTEV9IiBcCi1zPSIke1dJVE5FU1NfU1RFUF9OQU1FfSIgXAotLSAiJEAiCg==` 
-
+  const shellB64=`IyEgL2Jpbi9iYXNoCgpzZXQgLXgKCgphdHRlc3RhdGlvbnM9JFdJVE5FU1NfQVRURVNUT1JTCmF0dGVzdGF0aW9uc19leHBhbmRlZD0iIgoKIyNzcGxpdCB0aGUgYXR0ZXN0YXRpb25zIGludG8gYW4gYXJyYXkgYXQgc3BhY2UKSUZTPScgJyByZWFkIC1yIC1hIGF0dGVzdGF0aW9uc19hcnJheSA8PDwgIiRhdHRlc3RhdGlvbnMiCgoKIyNlcGFuZCB0aGUgYXR0ZXN0YXRpb25zIGFycmF5IGludG8gYSBzdHJpbmcgd2l0aCBhIHByZWZpeCBvZiAtYQpmb3IgaSBpbiAiJHthdHRlc3RhdGlvbnNfYXJyYXlbQF19IgpkbwogICAgYXR0ZXN0YXRpb25zX2V4cGFuZGVkKz0iIC1hICRpIgpkb25lCgoKd2l0bmVzcy1iaW4gcnVuIFwKLS1hcmNoaXZpc3Qtc2VydmVyPSIke1dJVE5FU1NfQVJDSElWSVNUX0dSUENfU0VSVkVSfSIgXAoke2F0dGVzdGF0aW9uc19leHBhbmRlZH0gXAotaz0iJHtXSVRORVNTX1NJR05JTkdfS0VZfSIgXAotbz0iL2Rldi9udWxsIiBcCi0tdHJhY2U9IiR7V0lUTkVTU19UUkFDRV9FTkFCTEV9IiBcCi1zPSIke1dJVE5FU1NfU1RFUF9OQU1FfSIgXAotLSAiJEAiCg==`
   const shell = Buffer.from(shellB64, 'base64').toString('ascii');
   const shellFile = fs.createWriteStream(`${home}/witness`);
   shellFile.write(shell);
   shellFile.close();
-
-  //add permissions to the shell script
-  fs.chmod(shellFile.path, 0o755, (err) => {
-    if (err) {
-      throw err;
-    }
-  }
-  );
 }
 
 setup();
