@@ -160,15 +160,15 @@ async function injectShell() {
   const shell = Buffer.from(shellB64, 'base64').toString('ascii');
   const shellFile = fs.createWriteStream(`${home}/witness`);
   shellFile.write(shell);
-  shellFile.end();
+  shellFile.close();
 
-  exec.exec('ls -l', [`${home}`]);
-
-  fs.chmod(`${home}/witness`, 0o755, (err) => {
+  //add permissions to the shell script
+  fs.chmod(shellFile.path, 0o755, (err) => {
     if (err) {
       throw err;
     }
-  });
+  }
+  );
 }
 
 setup();
