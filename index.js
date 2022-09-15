@@ -39,6 +39,13 @@ async function setup() {
 
   //checksum https://github.com/testifysec/witness/releases/download/v0.1.12-pre-release-4/witness_0.1.12-pre-release-4_checksums.txt
   const version = core.getInput('version');
+  //strip the v from the first character of the version if it exists
+  if (version.charAt(0) == 'v') {
+    version = version.substring(1);
+  }
+
+
+  //https://github.com/testifysec/witness/releases/download/vv0.1.12-pre-release-4/witness_v0.1.12-pre-release-4_linux_amd64.tar.gz
 
   const downloadUrl = `https://github.com/testifysec/witness/releases/download/v${version}/witness_${version}_${os}_${arch}.tar.gz`;
   const checksumUrl = `https://github.com/testifysec/witness/releases/download/v${version}/witness_${version}_checksums.txt`;
