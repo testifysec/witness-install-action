@@ -102,9 +102,9 @@ async function setup() {
   core.addPath(`${home}/witness-bin`);
   core.addPath(`${home}/witness`);
 
-  // exec.exec('ls', ['-la', `${home}`]);
-  // exec.exec('chmod', ['+x', `${home}/witness`]);
-  // exec.exec('chmod', ['+x', `${home}/witness-bin`]);
+  exec.exec('ls', ['-la', `${home}`]);
+  exec.exec('chmod', ['+x', `${home}/witness`]);
+  exec.exec('chmod', ['+x', `${home}/witness-bin`]);
 
 }
 
