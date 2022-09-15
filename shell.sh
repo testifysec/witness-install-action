@@ -1,7 +1,5 @@
 #! /bin/bash
-
-set -x
-
+set -e
 
 attestations=$WITNESS_ATTESTORS
 attestations_expanded=""
@@ -18,7 +16,7 @@ done
 
 
 witness-bin run \
---archivist-server="${WITNESS_ARCHIVIST_GRPC_SERVER}" \
+--archivist-grpc="${WITNESS_ARCHIVIST_GRPC_SERVER}" \
 ${attestations_expanded} \
 -k="${WITNESS_SIGNING_KEY}" \
 -o="/dev/null" \
