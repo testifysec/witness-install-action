@@ -2,6 +2,8 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const tc = require('@actions/tool-cache');
 const fs = require('fs');
+const crypto = require('crypto');
+
 
 
 
