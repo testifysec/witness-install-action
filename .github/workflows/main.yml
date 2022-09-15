@@ -17,6 +17,10 @@ jobs:
           trace-enable: "true"
           step-name: "test"
           archivist-grpc-server: "archivist-grpc.testifysec.io:443"
-          download-url: "https://github.com/testifysec/witness/releases/download/test-archivist-003/witness"
-      - run: witness curl google.com
+          version: v0.1.12-pre-release-4
+      - run: echo $PATH
+      - run: witness-bin version
+      - run: witness ls -al
+
+
 

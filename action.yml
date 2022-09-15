@@ -1,10 +1,10 @@
 name: 'Witness Configure'
 description: 'Installs and configures Witness'
 inputs:
-  download-url:
-    description: 'The URL to download the Witness binary'
-    required: true
-    default: "https://github.com/testifysec/witness/releases/download/test-archivist-003/witness"
+  version:
+    description: 'Witness version to install'
+    required: false
+    default: 'latest'
   archivist-grpc-server:
     description: 'Archivist server address'
     required: true
