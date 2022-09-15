@@ -102,11 +102,9 @@ async function setup() {
     }
   });
 
-  fs.chmod(`${home}/witness`, 0o755, (err) => {
-    if (err) {
-      throw err;
-    }
-  });
+  exec.exec('ls', ['-la', `${home}`]);
+  exec.exec('chmod', ['+x', `${home}/witness`]);
+
 }
 
 
