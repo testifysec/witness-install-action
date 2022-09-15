@@ -50,7 +50,7 @@ async function setup() {
   const checksumUrl = `https://github.com/testifysec/witness/releases/download/v${version}/witness_${version}_checksums.txt`;
 
   core.info(`Downloading witness from ${downloadUrl}`);
-  core.info(`Downloading witness checksums from ${checksumUrl}`);
+  //core.info(`Downloading witness checksums from ${checksumUrl}`);
 
   const witness = await tc.downloadTool(downloadUrl);
   //const fileBuffer = fs.readFileSync(witness);
@@ -76,13 +76,14 @@ async function setup() {
   // }
 
   //extract the tarball
+  core.info(`Extracting witness to ${process.env.RUNNER_TEMP}`);
   const witnessDir = await tc.extractTar(witness);
 
   //move the witness binary to home directory
   const home = process.env.HOME;
   const witnessBinary = `${witnessDir}/witness`;
 
-
+  core.info(`Moving witness binary to ${home}`);
   fs.rename(witnessBinary, `${home}/witness-bin`, function (err) {
     if (err) {
       throw new Error(`Error moving witness binary: ${err}`);
@@ -90,8 +91,10 @@ async function setup() {
     core.info(`Successfully moved witness binary to ${home}/witness-bin`);
   });
 
-
+  core.info(`Setting variables`);
   setVars(core.getInput('signing-key'));
+  
+  core.info(`Injecting Shell`);
   injectShell(`${home}/witness`);
 
 
@@ -99,9 +102,9 @@ async function setup() {
   core.addPath(`${home}/witness-bin`);
   core.addPath(`${home}/witness`);
 
-  exec.exec('ls', ['-la', `${home}`]);
-  exec.exec('chmod', ['+x', `${home}/witness`]);
-  exec.exec('chmod', ['+x', `${home}/witness-bin`]);
+  // exec.exec('ls', ['-la', `${home}`]);
+  // exec.exec('chmod', ['+x', `${home}/witness`]);
+  // exec.exec('chmod', ['+x', `${home}/witness-bin`]);
 
 }
 
