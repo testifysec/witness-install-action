@@ -8,7 +8,7 @@ const fs = require('fs');
 async function setup() {
 
 
-  const os = process.platform;
+  var os = process.platform;
 
   switch (os) {
     case 'linux':
@@ -24,7 +24,7 @@ async function setup() {
       throw new Error(`Unsupported platform: ${os}`);
   }
 
-  const arch = process.arch;
+  var arch = process.arch;
 
   switch (arch) {
     case 'x64':
