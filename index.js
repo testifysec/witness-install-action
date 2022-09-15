@@ -53,27 +53,27 @@ async function setup() {
   core.info(`Downloading witness checksums from ${checksumUrl}`);
 
   const witness = await tc.downloadTool(downloadUrl);
-  const fileBuffer = fs.readFileSync(witness);
-  const hash = crypto.createHash('sha256').update(fileBuffer).digest('hex');
+  //const fileBuffer = fs.readFileSync(witness);
+  //const hash = crypto.createHash('sha256').update(fileBuffer).digest('hex');
 
   //4a45abd867914b4ce41afd88c63ded9aae30bb5c887ab3829bb59b20b8eed695  witness_0.1.12-pre-release-4_windows_arm64.tar.gz
   //verify checksum
   
-  const checksum = await tc.downloadTool(checksumUrl);
-  var array = fs.readFileSync(checksum).toString().split("\n");
+  // const checksum = await tc.downloadTool(checksumUrl);
+  // var array = fs.readFileSync(checksum).toString().split("\n");
 
 
   
-  isValidChecksum = false;
-  for (i in array) {
-    if (array[i].includes(hash)) {
-      isValidChecksum = true;
-    }
-  }
+  // isValidChecksum = false;
+  // for (i in array) {
+  //   if (array[i].includes(hash)) {
+  //     isValidChecksum = true;
+  //   }
+  // }
 
-  if (!isValidChecksum) {
-    throw new Error(`Checksum mismatch for ${witness}`);
-  }
+  // if (!isValidChecksum) {
+  //   throw new Error(`Checksum mismatch for ${witness}`);
+  // }
 
   //extract the tarball
   const witnessDir = await tc.extractTar(witness);
@@ -84,7 +84,9 @@ async function setup() {
 
 
   fs.rename(witnessBinary, `${home}/witness-bin`, function (err) {
-    if (err) throw err;
+    if (err) {
+      throw new Error(`Error moving witness binary: ${err}`);
+    }
     core.info(`Successfully moved witness binary to ${home}/witness-bin`);
   });
 
@@ -143,6 +145,7 @@ function injectShell(path) {
   const shellFile = fs.createWriteStream(path);
   var err = shellFile.write(shell);
   if (err) {
+    core.info(`Error writing shell script to ${path}`);
     throw err;
   }
 }
