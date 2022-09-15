@@ -7,7 +7,5 @@ use_prefix () {
     done
 }
 
-use_
-
 
 shell "$@"
