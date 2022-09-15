@@ -43,8 +43,9 @@ async function setup() {
   const downloadUrl = `https://github.com/testifysec/witness/releases/download/v${version}/witness_${version}_${os}_${arch}.tar.gz`;
   const checksumUrl = `https://github.com/testifysec/witness/releases/download/v${version}/witness_${version}_checksums.txt`;
 
-  log.info(`Downloading witness from ${downloadUrl}`);
-  log.info(`Downloading witness checksums from ${checksumUrl}`);
+  core.info(`Downloading witness from ${downloadUrl}`);
+  core.info(`Downloading witness checksums from ${checksumUrl}`);
+
 
   const witness = await tc.downloadTool(downloadUrl);
   const fileBuffer = fs.readFileSync(witness);
