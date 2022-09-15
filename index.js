@@ -68,18 +68,16 @@ async function setup() {
   //verify checksum
   
   const checksum = await tc.downloadTool(checksumUrl);
-  const checksumFile = fs.createReadStream(checksum);
-  const checksums = await checksumFile.read();  
+  var array = fs.readFileSync(checksum).toString().split("\n");
+
+
   
   isValidChecksum = false;
-  for (const line of checksums.split('\n')) {
-    const [checksum, filename] = line.split(' ');
-    if (filename === witness) {
-      isValidChecksum = checksum === hash;
-      break;
+  for (i in array) {
+    if (array[i].includes(hash)) {
+      isValidChecksum = true;
     }
   }
-
 
   if (!isValidChecksum) {
     throw new Error(`Checksum mismatch for ${witness}`);
