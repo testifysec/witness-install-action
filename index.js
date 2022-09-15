@@ -43,19 +43,21 @@ async function setup() {
   const downloadUrl = `https://github.com/testifysec/witness/releases/download/v${version}/witness_${version}_${os}_${arch}.tar.gz`;
   const checksumUrl = `https://github.com/testifysec/witness/releases/download/v${version}/witness_${version}_checksums.txt`;
 
-  const checksum = await tc.downloadTool(checksumUrl);
-  const checksumFile = fs.createReadStream(checksum);
-  const checksums = await checksumFile.read();
-
   const witness = await tc.downloadTool(downloadUrl);
   const fileBuffer = fs.readFileSync(witness);
   const hash = crypto.createHash('sha256').update(fileBuffer).digest('hex');
 
-  //Get sha256 hash of downloaded file
-  const witnessFile = fs.createReadStream(witness);
+
   
+
+
   //4a45abd867914b4ce41afd88c63ded9aae30bb5c887ab3829bb59b20b8eed695  witness_0.1.12-pre-release-4_windows_arm64.tar.gz
   //verify checksum
+  
+  const checksum = await tc.downloadTool(checksumUrl);
+  const checksumFile = fs.createReadStream(checksum);
+  const checksums = await checksumFile.read();  
+  
   isValidChecksum = false;
   for (const line of checksums.split('\n')) {
     const [checksum, filename] = line.split(' ');
