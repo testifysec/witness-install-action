@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Witness install
-        uses: testifysec/witness-install-action@1-add-multi-arch-support
+        uses: testifysec/witness-install-action@main
         with:
           signing-key: |
             -----BEGIN PRIVATE KEY-----
