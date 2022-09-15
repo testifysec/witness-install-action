@@ -38,7 +38,7 @@ async function setup() {
   }
 
   //checksum https://github.com/testifysec/witness/releases/download/v0.1.12-pre-release-4/witness_0.1.12-pre-release-4_checksums.txt
-  const version = core.getInput('version');
+  var version = core.getInput('version');
   //strip the v from the first character of the version if it exists
   if (version.charAt(0) == 'v') {
     version = version.substring(1);
