@@ -14,7 +14,7 @@ jobs:
             MC4CAQAwBQYDK2VwBCIEIN2GVZvD5a8M8ALX6ES0NV3zrNzi0ZwZ+DMJQykS92Lc
             -----END PRIVATE KEY-----
           attestors: git environment
-          trace-enable: "true"
+          trace-enable: "false"
           step-name: "test"
           archivist-grpc-server: "archivist-grpc.testifysec.io:443"
           version: v0.1.12-pre-release-4

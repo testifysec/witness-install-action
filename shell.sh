@@ -14,12 +14,25 @@ do
     attestations_expanded+=" -a $i"
 done
 
+##check if the trace is enabled
+if [ "$WITNESS_TRACE_ENABLE" = true ] ; then
+    echo "Trace is enabled"
+    witness-bin run \
+    --archivist-grpc="${WITNESS_ARCHIVIST_GRPC_SERVER}" \
+    ${attestations_expanded} \
+    -k="${WITNESS_SIGNING_KEY}" \
+    -o="/dev/null" \
+    --trace \
+    -s="${WITNESS_STEP_NAME}" \
+    -- "$@"
 
-witness-bin run \
---archivist-grpc="${WITNESS_ARCHIVIST_GRPC_SERVER}" \
-${attestations_expanded} \
--k="${WITNESS_SIGNING_KEY}" \
--o="/dev/null" \
---trace="${WITNESS_TRACE_ENABLE}" \
--s="${WITNESS_STEP_NAME}" \
--- "$@"
+else
+    echo "Trace is disabled"
+    witness-bin run \
+    --archivist-grpc="${WITNESS_ARCHIVIST_GRPC_SERVER}" \
+    ${attestations_expanded} \
+    -k="${WITNESS_SIGNING_KEY}" \
+    -o="/dev/null" \
+    -s="${WITNESS_STEP_NAME}" \
+    -- "$@"
+fi
