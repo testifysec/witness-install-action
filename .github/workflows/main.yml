@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Witness install
-        uses: testifysec/witness-install-action@main
+        uses: testifysec/witness-install-action@fix_trace
         with:
           signing-key: |
             -----BEGIN PRIVATE KEY-----
@@ -18,7 +18,6 @@ jobs:
           step-name: "test"
           archivist-grpc-server: "archivist-grpc.testifysec.io:443"
           version: v0.1.12-pre-release-4
-      - run: echo $PATH
       - run: witness-bin version
       - run: witness ls -al
 
