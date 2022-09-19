@@ -3,7 +3,7 @@ const exec = require("@actions/exec");
 const tc = require("@actions/tool-cache");
 const fs = require("fs");
 const crypto = require("crypto");
-const { time } = require("console");
+const YAML = require('yaml')
 
 async function setup() {
   var os = process.platform;
@@ -83,8 +83,10 @@ async function setup() {
     core.info(`Successfully moved witness binary to ${dir}/witness-bin`);
   });
 
-  core.info(`Setting variables`);
-  setVars(core.getInput("signing-key"));
+  core.info(`Writing Key to File`);
+  writeKey(core.getInput("signing-key"), dir);
+
+
 
   core.info(`Injecting Shell`);
   await injectShell(`${dir}/witness`);
@@ -105,54 +107,67 @@ async function setup() {
     core.info(`Successfully made witness executable`);
   });
 
+
+  const keyLocation = `${dir}/key.pem`;
+  archivistGRPCServer = core.getInput("archivist-grpc-server");
+  attestors = core.getInput("attestors");
+  attestations = attestors.split(",");
+  traceEnable = core.getInput("trace-enable")
+  stepName = core.getInput("step-name")
+  outfile = `/dev/null`
+
+  await writeConfigFile(dir, archivistGRPCServer, attestors, keyLocation, traceEnable, stepName, outfile);
+
   //add tool to path
   core.addPath(`${dir}`);
 }
 
-function setVars(key) {
-  //write the key to a temp file
-  const keyFile = fs.createWriteStream("../key.pem");
+function writeKey(key, dir) {
+  const keyFile = fs.createWriteStream(`${dir}/key.pem`);
   keyFile.write(key);
   keyFile.close();
 
-  //get working directory
-  const cwd = process.cwd();
-
-  //get directory one level up
-  const parent = cwd.split("/").slice(0, -1).join("/");
-
-  //set the env var
-  core.exportVariable("WITNESS_SIGNING_KEY", `${parent}/key.pem`);
-
-  stepName = core.getInput("step-name");
-  core.exportVariable("WITNESS_STEP_NAME", stepName);
-
-  traceEnable = core.getInput("trace-enable");
-  if (traceEnable == "true") {
-    core.exportVariable("WITNESS_TRACE_ENABLE", "true");
-  } else {
-    core.exportVariable("WITNESS_TRACE_ENABLE", "false");
-  }
-
-  archivistGRPCServer = core.getInput("archivist-grpc-server");
-  core.exportVariable("WITNESS_ARCHIVIST_GRPC_SERVER", archivistGRPCServer);
-
-  attestors = core.getInput("attestors");
-  core.exportVariable("WITNESS_ATTESTORS", attestors);
+  core.info(`Successfully wrote key to ${dir}/key.pem`);
 }
 
 async function injectShell(path) {
-  //base64 encoding of the shell.sh script
-  const shellB64 = `IyEgL2Jpbi9iYXNoCnNldCAtZQoKYXR0ZXN0YXRpb25zPSRXSVRORVNTX0FUVEVTVE9SUwphdHRlc3RhdGlvbnNfZXhwYW5kZWQ9IiIKCiMjc3BsaXQgdGhlIGF0dGVzdGF0aW9ucyBpbnRvIGFuIGFycmF5IGF0IHNwYWNlCklGUz0nICcgcmVhZCAtciAtYSBhdHRlc3RhdGlvbnNfYXJyYXkgPDw8ICIkYXR0ZXN0YXRpb25zIgoKCiMjZXBhbmQgdGhlIGF0dGVzdGF0aW9ucyBhcnJheSBpbnRvIGEgc3RyaW5nIHdpdGggYSBwcmVmaXggb2YgLWEKZm9yIGkgaW4gIiR7YXR0ZXN0YXRpb25zX2FycmF5W0BdfSIKZG8KICAgIGF0dGVzdGF0aW9uc19leHBhbmRlZCs9IiAtYSAkaSIKZG9uZQoKIyNjaGVjayBpZiB0aGUgdHJhY2UgaXMgZW5hYmxlZAppZiBbICIkV0lUTkVTU19UUkFDRV9FTkFCTEUiID0gdHJ1ZSBdIDsgdGhlbgogICAgZWNobyAiVHJhY2UgaXMgZW5hYmxlZCIKICAgIHdpdG5lc3MtYmluIHJ1biBcCiAgICAtLWFyY2hpdmlzdC1ncnBjPSIke1dJVE5FU1NfQVJDSElWSVNUX0dSUENfU0VSVkVSfSIgXAogICAgJHthdHRlc3RhdGlvbnNfZXhwYW5kZWR9IFwKICAgIC1rPSIke1dJVE5FU1NfU0lHTklOR19LRVl9IiBcCiAgICAtbz0iL2Rldi9udWxsIiBcCiAgICAtLXRyYWNlIFwKICAgIC1zPSIke1dJVE5FU1NfU1RFUF9OQU1FfSIgXAogICAgLS0gIiRAIgoKZWxzZQogICAgZWNobyAiVHJhY2UgaXMgZGlzYWJsZWQiCiAgICB3aXRuZXNzLWJpbiBydW4gXAogICAgLS1hcmNoaXZpc3QtZ3JwYz0iJHtXSVRORVNTX0FSQ0hJVklTVF9HUlBDX1NFUlZFUn0iIFwKICAgICR7YXR0ZXN0YXRpb25zX2V4cGFuZGVkfSBcCiAgICAtaz0iJHtXSVRORVNTX1NJR05JTkdfS0VZfSIgXAogICAgLW89Ii9kZXYvbnVsbCIgXAogICAgLXM9IiR7V0lUTkVTU19TVEVQX05BTUV9IiBcCiAgICAtLSAiJEAiCmZp`;
-  const shell = Buffer.from(shellB64, "base64").toString("ascii");
+  const script = `
+  #! /bin/bash
+  set -e
+  set -x
+  echo "Running witness with config:"
+  cat $RUNNER_TEMP/.witness.yaml
+  witness-bin -c $RUNNER_TEMP/.witness.yaml run -- "$@"
+  `; 
+
   const shellFile = fs.createWriteStream(path);
 
   core.info(`Writing shell to ${path}`);
-  shellFile.write(shell);
+  shellFile.write(script);
   shellFile.close();
 
   //wait 100ms
   await new Promise((r) => setTimeout(r, 100));
 }
 
+async function writeConfigFile(dir, archivistGRPCServer, attestations, keyLocation, traceEnable, stepName, outfile) {
+  const config = {
+    run : {
+      "archivist-grpc": archivistGRPCServer,
+      "attestations": attestations,
+      "key": keyLocation,
+      "trace": traceEnable,
+      "step": stepName,
+      "outfile": outfile,
+    },
+  };
+
+  core.info(`Writing config with options ${JSON.stringify(config)}`);
+
+  const configFile = fs.createWriteStream(`${dir}/.witness.yaml`);
+  configFile.write(YAML.stringify(config));
+  configFile.close();
+}
+
 setup();
+

@@ -3,9 +3,12 @@
 This action installs the Witness Binary and a Helper Script.
 
 Note:
+
 - Trace only works on Linux amd64.
 
 Eaxmple:
+
+
 ```
 on: [push]
 jobs:
