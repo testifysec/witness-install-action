@@ -6,8 +6,8 @@ jobs:
     services:
       spire-agent:
         image: colek42/test-spire:test-debug
-          options: >-
-            run
+        options: >-
+          run
     name: test witness install
     steps:
       - uses: actions/checkout@v3
