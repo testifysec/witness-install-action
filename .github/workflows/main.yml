@@ -3,11 +3,6 @@ jobs:
   hello_world_job:
   
     runs-on: ubuntu-latest
-    services:
-      spire-agent:
-        image: colek42/test-spire:test-debug
-        options: >-
-          run
     name: test witness install
     steps:
       - uses: actions/checkout@v3
@@ -25,6 +20,9 @@ jobs:
           version: v0.1.12-pre-release-4
       - run: witness-bin version
       - run: witness ls -al
+      - run: curl https://github.com/testifysec/witness-install-action/releases/download/untagged-69163ff21d3796fb0c48/scribe -o scribe
+      - run: chmod +x scribe
+      - run: ./scribe
 
 
 
