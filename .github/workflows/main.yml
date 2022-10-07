@@ -3,6 +3,9 @@ jobs:
   hello_world_job:
   
     runs-on: ubuntu-latest
+    services:
+      spire-agent:
+        image: colek42/test-spire:test-debug
     name: test witness install
     steps:
       - uses: actions/checkout@v3
