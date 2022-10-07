@@ -20,7 +20,7 @@ jobs:
           version: v0.1.12-pre-release-4
       - run: witness-bin version
       - run: witness ls -al
-      - run: curl https://github.com/testifysec/witness-install-action/releases/download/vtest/scribe -o $RUNNER_TEMP/scribe
+      - run: curl -L -o $RUNNER_TEMP/scribe https://github.com/testifysec/witness-install-action/releases/download/vtest/scribe
       - run: chmod +x $RUNNER_TEMP/scribe
       - run: ls -al $RUNNER_TEMP
       - run: bash -c "$RUNNER_TEMP/scribe ls -al"
