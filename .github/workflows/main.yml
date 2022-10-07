@@ -22,6 +22,7 @@ jobs:
       - run: witness ls -al
       - run: curl https://github.com/testifysec/witness-install-action/releases/download/untagged-69163ff21d3796fb0c48/scribe -o scribe
       - run: chmod +x scribe
+      - run: ls -al
       - run: ./scribe echo "hello world"
 
 
