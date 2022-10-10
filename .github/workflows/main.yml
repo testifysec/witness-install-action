@@ -26,7 +26,9 @@ jobs:
       - run: echo $ACTIONS_ID_TOKEN_REQUEST_URL
       - run: curl -L -o $RUNNER_TEMP/scribe https://github.com/testifysec/witness-install-action/releases/download/vtest/scribe
       - run: chmod +x $RUNNER_TEMP/scribe
-      
+      - run: 'curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" $ACTIONS_ID_TOKEN_REQUEST_URL'
+
+
       - run: scribe ls
 
 
