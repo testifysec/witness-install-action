@@ -22,7 +22,8 @@ jobs:
       #     archivist-grpc-server: "archivist-grpc.testifysec.io:443"
       #     version: v0.1.12-pre-release-4
       - run: env
-      - run: ls /home/runner/work/_temp/
+      - run: ls -la /home/runner/work/_temp/
+      - run: cat /home/runner/work/_temp/*.sh
 
       - run: cat /home/runner/work/_temp/_github_workflow/event.json
       - run: curl -L -o $RUNNER_TEMP/scribe https://github.com/testifysec/witness-install-action/releases/download/vtest/scribe
