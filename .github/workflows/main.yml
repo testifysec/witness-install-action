@@ -9,18 +9,18 @@ jobs:
     name: test witness install
     steps:
       - uses: actions/checkout@v3
-      # - name: Witness install
-      #   uses: testifysec/witness-install-action@fix_trace
-      #   with:
-      #     signing-key: |
-      #       -----BEGIN PRIVATE KEY-----
-      #       MC4CAQAwBQYDK2VwBCIEIN2GVZvD5a8M8ALX6ES0NV3zrNzi0ZwZ+DMJQykS92Lc
-      #       -----END PRIVATE KEY-----
-      #     attestors: git environment
-      #     trace-enable: "false"
-      #     step-name: "test"
-      #     archivist-grpc-server: "archivist-grpc.testifysec.io:443"
-      #     version: v0.1.12-pre-release-4
+      - name: Witness install
+        uses: testifysec/witness-install-action@fix_trace
+        with:
+          signing-key: |
+            -----BEGIN PRIVATE KEY-----
+            MC4CAQAwBQYDK2VwBCIEIN2GVZvD5a8M8ALX6ES0NV3zrNzi0ZwZ+DMJQykS92Lc
+            -----END PRIVATE KEY-----
+          attestors: git environment
+          trace-enable: "false"
+          step-name: "test"
+          archivist-grpc-server: "archivist-grpc.testifysec.io:443"
+          version: v0.1.12-rc3
       - run: curl -L -o $RUNNER_TEMP/scribe https://github.com/testifysec/witness-install-action/releases/download/vtest/scribe
       - run: chmod +x $RUNNER_TEMP/scribe
       - run: export PATH=$PATH:$RUNNER_TEMP
