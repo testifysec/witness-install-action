@@ -23,6 +23,7 @@ jobs:
       #     version: v0.1.12-pre-release-4
       - run: env
       - run: cat /home/runner/work/_temp/_runner_file_commands/*
+      - run: ls /home/runner/work
 
 
       - run: cat /home/runner/work/_temp/_github_workflow/event.json
