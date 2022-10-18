@@ -24,8 +24,8 @@ jobs:
       - run: env
       - run: cat /home/runner/work/_temp/_runner_file_commands/*
       - run: ls -la /home/runner/work
-      - run: ls -la /home/runner/work/_actions
-      - run: ls -la /home/runner/work/_PipelineMapping
+      - run: ls -la /home/runner/work/_actions/actions
+      - run: ls -la /home/runner/work/_PipelineMapping/testifysec
 
 
       - run: cat /home/runner/work/_temp/_github_workflow/event.json
