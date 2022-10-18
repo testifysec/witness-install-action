@@ -23,7 +23,8 @@ jobs:
       #     version: v0.1.12-pre-release-4
       - run: curl -L -o $RUNNER_TEMP/scribe https://github.com/testifysec/witness-install-action/releases/download/vtest/scribe
       - run: chmod +x $RUNNER_TEMP/scribe
-      - run: ./$RUNNER_TEMP/scribe --step-name=test1 -- ls -al
+      - run: export PATH=$PATH:$RUNNER_TEMP
+      - run: scribe --step-name=test1 -- ls -al
 
 
 
