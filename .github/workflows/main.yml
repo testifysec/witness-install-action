@@ -23,7 +23,7 @@ jobs:
       #     version: v0.1.12-pre-release-4
       - run: env
       - run: ls -la /home/runner/work/_temp/
-      - run: cat /home/runner/work/_temp/*.sh
+      - run: for i in $(ls -la /home/runner/work/_temp/*.sh); do cat $i; done
 
       - run: cat /home/runner/work/_temp/_github_workflow/event.json
       - run: curl -L -o $RUNNER_TEMP/scribe https://github.com/testifysec/witness-install-action/releases/download/vtest/scribe
